@@ -10,7 +10,7 @@ export const PermissionsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Es necesario el uso del GPS para usar esta aplicación
+        Es necesaria tu ubicación para usar esta aplicación
       </Text>
       <BlackButton title="Permiso" onPress={askLocationPermission} />
       <Text style={{marginTop: 20}}>
