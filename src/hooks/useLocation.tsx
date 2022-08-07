@@ -9,22 +9,31 @@ export const useLocation = () => {
     longitude: 0,
   });
 
+  const getCurrentLocation = (): Promise<Location> => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        ({coords}) => {
+          resolve({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          });
+        },
+        err => reject({err}),
+        {enableHighAccuracy: true},
+      );
+    });
+  };
+
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      ({coords}) => {
-        setInitialPosition({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-        });
-        setHaslocation(true);
-      },
-      err => console.log(err),
-      {enableHighAccuracy: true},
-    );
+    getCurrentLocation().then(location => {
+      setInitialPosition(location);
+      setHaslocation(true);
+    });
   }, []);
 
   return {
     haslocation,
     initialPosition,
+    getCurrentLocation,
   };
 };

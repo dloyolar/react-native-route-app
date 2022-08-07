@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useRef} from 'react';
 import MapView from 'react-native-maps';
 
 import {useLocation} from '../hooks/useLocation';
@@ -7,7 +7,14 @@ import {LoadingScreen} from '../screens/LoadingScreen';
 import {Fab} from './Fab';
 
 export const Map = () => {
-  const {haslocation, initialPosition} = useLocation();
+  const {haslocation, initialPosition, getCurrentLocation} = useLocation();
+
+  const mapViewRef = useRef<MapView>();
+
+  const centerPosition = async () => {
+    const location = await getCurrentLocation();
+    mapViewRef.current?.animateCamera({center: location});
+  };
 
   if (!haslocation) {
     return <LoadingScreen />;
@@ -16,6 +23,7 @@ export const Map = () => {
   return (
     <>
       <MapView
+        ref={el => (mapViewRef.current = el!)}
         style={{flex: 1}}
         // provider={PROVIDER_GOOGLE}ç
         showsUserLocation
@@ -36,8 +44,8 @@ export const Map = () => {
         /> */}
       </MapView>
       <Fab
-        iconName="star-outline"
-        onPress={() => {}}
+        iconName="compass-outline"
+        onPress={centerPosition}
         style={{position: 'absolute', right: 20, bottom: 20}}
       />
     </>
