@@ -4,6 +4,7 @@ import MapView from 'react-native-maps';
 
 import {useLocation} from '../hooks/useLocation';
 import {LoadingScreen} from '../screens/LoadingScreen';
+import {Fab} from './Fab';
 
 export const Map = () => {
   const {haslocation, initialPosition} = useLocation();
@@ -34,6 +35,11 @@ export const Map = () => {
           description="DESCRIPCION"
         /> */}
       </MapView>
+      <Fab
+        iconName="star-outline"
+        onPress={() => {}}
+        style={{position: 'absolute', right: 20, bottom: 20}}
+      />
     </>
   );
 };
