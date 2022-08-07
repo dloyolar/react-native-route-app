@@ -17,6 +17,7 @@ Note: This project was build with React Native CLI 🚀
 
 ```bash
   cd my-project
+  yarn install
   npx react-native run-ios
   npx react-native run-android
 ```
