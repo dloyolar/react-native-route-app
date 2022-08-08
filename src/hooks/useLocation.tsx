@@ -61,7 +61,6 @@ export const useLocation = () => {
       setRouteLines(routes => [...routes, location]);
       setHaslocation(true);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

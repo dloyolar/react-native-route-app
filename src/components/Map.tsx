@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MapView, {Polyline} from 'react-native-maps';
 
 import {useLocation} from '../hooks/useLocation';
@@ -8,6 +8,7 @@ import {LoadingScreen} from '../screens/LoadingScreen';
 import {Fab} from './Fab';
 
 export const Map = () => {
+  const [showPolyline, setShowPolyline] = useState(true);
   const {
     haslocation,
     initialPosition,
@@ -59,11 +60,13 @@ export const Map = () => {
           longitudeDelta: 0.0421,
         }}
         onTouchStart={() => (following.current = false)}>
-        <Polyline
-          coordinates={routeLines}
-          strokeColor="black"
-          strokeWidth={3}
-        />
+        {showPolyline && (
+          <Polyline
+            coordinates={routeLines}
+            strokeColor="black"
+            strokeWidth={3}
+          />
+        )}
         {/* <Marker
           image={require('../assets/custom-marker.png')}
           coordinate={{
@@ -78,6 +81,11 @@ export const Map = () => {
         iconName="compass-outline"
         onPress={centerPosition}
         style={{position: 'absolute', right: 20, bottom: 20}}
+      />
+      <Fab
+        iconName="brush-outline"
+        onPress={() => setShowPolyline(!showPolyline)}
+        style={{position: 'absolute', right: 20, bottom: 80}}
       />
     </>
   );
