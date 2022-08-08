@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useRef} from 'react';
-import MapView from 'react-native-maps';
+import MapView, {Polyline} from 'react-native-maps';
 
 import {useLocation} from '../hooks/useLocation';
 import {LoadingScreen} from '../screens/LoadingScreen';
@@ -15,6 +15,7 @@ export const Map = () => {
     followUserLocation,
     userLocation,
     stopFollowUserLocation,
+    routeLines,
   } = useLocation();
 
   const mapViewRef = useRef<MapView>();
@@ -58,6 +59,11 @@ export const Map = () => {
           longitudeDelta: 0.0421,
         }}
         onTouchStart={() => (following.current = false)}>
+        <Polyline
+          coordinates={routeLines}
+          strokeColor="black"
+          strokeWidth={3}
+        />
         {/* <Marker
           image={require('../assets/custom-marker.png')}
           coordinate={{
